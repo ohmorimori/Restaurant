@@ -1,0 +1,13 @@
+<div class="main shops-index">
+  <div class="container">
+  	<!-- @shopsの代わりにAPIからもらったリストを渡す -->
+    <% @shops.each do |shop| %>
+      <div class="shops-index-item">
+	      <div class="shop-name">
+	      	
+	        <%= link_to("店名#{shop.shop_id}", "https://www.gnavi.co.jp/", target: "_blank") %>
+	      </div>
+      </div>
+    <% end %>
+  </div>
+</div>

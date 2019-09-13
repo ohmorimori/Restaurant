@@ -1,0 +1,73 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+a {
+	text-decoration: none;
+	color: #332d2f;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+
+ul, li {
+	list-style-type: none;	
+	padding: 0;
+	margin: 0;
+}
+
+input {
+ 	outline-width: 0;
+}
+input[type="submit"] {
+ 	cursor: pointer;
+}
+/* header */
+
+header {
+	height: 64px;
+	z-index: 1;
+	width: 100%;
+	background-color: #ffbddb;
+}
+
+.header-logo {
+	float: left;
+	padding-left: 10px;
+	padding-top: 20px;
+	a {
+		color: white;
+
+	}
+}
+
+.header-menus {
+	float: right;
+	padding-right: 20px;
+	padding-top: 20px;
+	
+	li {
+		a {
+			color: white;
+		}
+	}
+}
+
+/* body */
+body {
+	color: #332d2f;
+	margin: 0;
+}
+
+
+.main {
+	padding-top: 20px;
+	position: absolute;
+	text-align: center;
+	top: 64px;
+	width: 100%;
+	height: auto;
+	min-height: 100%;
+	background-color: #f5f8fa;
+}

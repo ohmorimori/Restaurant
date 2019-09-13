@@ -1,0 +1,31 @@
+// Place all the styles related to the Shops controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.form-control {
+	width: 30%;
+	height: 30px
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  clear: both;
+}
+
+.shops-index-item {
+	padding: 20px 30px;
+	box-shadow: 0 2px 6px #d7c1d6;
+	background-color: white;
+}
+
+.shop-name {
+	a {
+		font-weight: bold;
+		&:hover {
+			color: #cd3e7c;
+		}
+	}
+}

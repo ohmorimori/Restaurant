@@ -1,0 +1,14 @@
+<h1>Home#top</h1>
+<p>Find me in app/views/home/top.html.erb</p>
+
+
+<div class="main top-main">
+	<%= form_tag("/shops/index", method: "get") do %>
+		<div>
+			<%= text_field_tag :search, params[:search], placeholder: "レストランを検索したい地域はどこですか?", class: "form-control"%>
+		</div>
+		<div>
+			<%= submit_tag "Search", class: "btn" %>
+		</div>
+	<% end %>
+</div>
