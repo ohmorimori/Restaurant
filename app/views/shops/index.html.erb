@@ -1,6 +1,11 @@
+<!--
+
+<div id="map"></div>
 <div class="main shops-index">
   <div class="container">
-  	<!-- @shopsの代わりにAPIからもらったリストを渡す -->
+
+
+
     <% @shops.each do |shop| %>
       <div class="shops-index-item">
 	      <div class="shop-name">
@@ -11,3 +16,10 @@
     <% end %>
   </div>
 </div>
+
+
+  <input type="text" id="key" placeholder="アクセスキーを入力"><input type="button" id="submit" value="送信">
+  <table id="table" border="1">
+    <tr><th>店舗名</th><th>アクセス</th></tr>
+  </table>
+-->
