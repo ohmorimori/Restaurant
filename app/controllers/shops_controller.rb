@@ -3,8 +3,6 @@ require 'net/http'
 class ShopsController < ApplicationController
 
 	def index
-		
-
 		key_id = "6463bc55622ce5ad6df3afe4bd4d9815"
 		url = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
 		prms = ""
@@ -64,6 +62,5 @@ class ShopsController < ApplicationController
 
 		#sort by distance from serch point
 		@shops = @shops.sort_by { |shop| shop["dist_from_search_point"].to_d }
-
 	end
 end
