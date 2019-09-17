@@ -6,7 +6,6 @@
   <p>ヒット件数: <%= @shops.present? ? @shops.length : 0 %></p>
   <% if @shops.present? %>
     <div class="container">
-
         <% @shops.each do |shop| %>
           <div class="shops-index-item">
     	      <div class="shop-name">
@@ -15,11 +14,7 @@
 
             <div class="shop-dist">
               検索地点からの距離:
-              <% if shop["longitude"].present? && shop["latitude"].present?%>
-                <%=  "#{(shop["dist_from_search_point"]*1000).round(0)} m" %>
-              <% else %>
-                ?
-              <% end %>
+              <%=  shop["dist_from_search_point"].present? ? shop["dist_from_search_point"] : "-" %> m
             </div>
           </div>
         <% end %>

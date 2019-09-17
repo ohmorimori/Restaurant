@@ -4,22 +4,32 @@ class ShopsController < ApplicationController
 
 	def index
 		
-		#prevent blank search window to return restaurants all around japan 
-		if (params[:search] == "") 
-			return
-		end
 
-		url = "https://api.gnavi.co.jp/RestSearchAPI/v3/";
-		prms = URI.encode_www_form(
-			{
-			#https://api.gnavi.co.jp/api/manual/restsearch/
-			    keyid: "6463bc55622ce5ad6df3afe4bd4d9815",
-			    latitude: params[:lat],
-			    longitude: params[:lng],
-			    range: 4,
-			    hit_per_page: 20
-			}
-		)
+		key_id = "6463bc55622ce5ad6df3afe4bd4d9815"
+		url = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+		prms = ""
+		if (params[:lat].present? && params[:lng].present?)
+			prms = URI.encode_www_form(
+				{
+				#https://api.gnavi.co.jp/api/manual/restsearch/
+				    keyid: key_id,
+				    latitude: params[:lat],
+				    longitude: params[:lng],
+				    range: 4,
+				    hit_per_page: 20
+				}
+			)
+		elsif (params[:search].present?)
+			prms = URI.encode_www_form(
+				{
+				#https://api.gnavi.co.jp/api/manual/restsearch/
+				    keyid: key_id,
+				    address: params[:search],
+				    hit_per_page: 20
+				}
+			)
+		end
+		
 		parsed_url = URI.parse(url + "?" + prms)
 
 		http = Net::HTTP.new(parsed_url.host, parsed_url.port)
@@ -28,7 +38,8 @@ class ShopsController < ApplicationController
 		result = JSON.parse(response.body)
 		@shops = result["rest"]
 		
-		if !@shops
+		#unnecessary to calculate distance if no map info 
+		if @shops.blank? || params[:lat].blank? || params[:lng].blank?
 			return
 		end
 		
@@ -47,7 +58,8 @@ class ShopsController < ApplicationController
 			
 			#https://keisan.casio.jp/exec/system/1257670779
 			distance = r * Math.acos(Math.sin(y_1) * Math.sin(y_2) + Math.cos(y_1) * Math.cos(y_2) * Math.cos(x_2 - x_1)) 
-			shop["dist_from_search_point"] = distance
+			#convert to km -> m
+			shop["dist_from_search_point"] = (distance*1000).to_i
 		end
 
 		#sort by distance from serch point
