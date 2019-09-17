@@ -2,17 +2,43 @@
 <p>Find me in app/views/home/top.html.erb</p>
 
 <div class="main top-main">
-
-	<div>
-		<%= text_field_tag :search, params[:search], placeholder: "レストランを検索したい地域はどこですか?", class: "form-control"%>
-	</div>
-	<div>
-		<%= submit_tag "Search", class: "btn", id: "search-btn" %>
-	</div>
-
+	<%= form_tag shops_index_path, method: :get do %>
+		<div>
+			<%= text_field_tag :search, params[:search], placeholder: "レストランを検索したい地域はどこですか?", class: "form-control"%>
+		</div>
+		<div>
+			<%= submit_tag "Search", class: "btn", id: "search-btn" %>
+		</div>
+		<%= hidden_field_tag :lat %>
+		<%= hidden_field_tag :lng %>
+	<% end %>
 	<div class="shops-index">
 		<div class="container">
 		
 		</div>
 	</div>
 </div>
+
+<script>
+function init() {
+	//how to pass info to params when enter pushed in window
+	//https://code-examples.net/ja/q/c3902c
+	var input = document.getElementById('search');
+	var autocomplete = new google.maps.places.Autocomplete(input);
+	autocomplete.addListener('place_changed', function() {
+		var place = autocomplete.getPlace();
+		var lat = place.geometry.location.lat();
+		var lng = place.geometry.location.lng();
+		//alert(`lat: ${lat}\nlng: ${lng}`);
+
+		document.getElementById('lat').value = lat;
+		document.getElementById('lng').value = lng;
+		if (!place.geometry) {
+			window.alert("Autocomplete's returned place contains no geometry");
+			return;
+		}
+	});
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1BoiSo2jL950_AuFzV-f9ETgKn0uQl2I&libraries=places&callback=init" async defer></script>

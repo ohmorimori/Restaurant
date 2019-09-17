@@ -1,0 +1,13 @@
+<div id="map"></div>
+<div class="main shops-index">
+  <div class="container">
+
+    <% @result["rest"].each do |shop| %>
+      <div class="shops-index-item">
+	      <div class="shop-name">
+	        <%= link_to(shop["name"], shop["url"], target: "_blank") %>
+	      </div>
+      </div>
+    <% end %>
+  </div>
+</div>
