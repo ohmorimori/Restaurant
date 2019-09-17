@@ -2,18 +2,27 @@
 
 
 <div class="main shops-index">
-<%= "検索地点: #{params[:search]}"%>
+  <p>検索地点: <%= params[:search] %></p>
+  <p>ヒット件数: <%= @shops.present? ? @shops.length : 0 %></p>
+  <% if @shops.present? %>
+    <div class="container">
 
-  <div class="container">
-    <% if @shops.present? %>
-      <% @shops.each do |shop| %>
-        <div class="shops-index-item">
-  	      <div class="shop-name">
-  	        <%= link_to(shop["name"], shop["url"], target: "_blank") %>
-  	      </div>
-          <%= "\n検索地点からの距離: #{(shop["dist_from_search_point"]*1000).round(0)} m" %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
+        <% @shops.each do |shop| %>
+          <div class="shops-index-item">
+    	      <div class="shop-name">
+    	        <%= link_to(shop["name"], shop["url"], target: "_blank") %>
+    	      </div>
+
+            <div class="shop-dist">
+              検索地点からの距離:
+              <% if shop["longitude"].present? && shop["latitude"].present?%>
+                <%=  "#{(shop["dist_from_search_point"]*1000).round(0)} m" %>
+              <% else %>
+                ?
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  <% end %>
 </div>
