@@ -2,17 +2,12 @@
 <p>Find me in app/views/home/top.html.erb</p>
 
 <div class="main top-main">
-
-	<div>
-		<%= text_field_tag :search, params[:search], placeholder: "レストランを検索したい地域はどこですか?", class: "form-control"%>
-	</div>
-	<div>
-		<%= submit_tag "Search", class: "btn", id: "search-btn" %>
-	</div>
-
-	<div class="shops-index">
-		<div class="container">
-		
+	<%= form_tag shops_index_path, method: :get do %>
+		<div>
+			<%= text_field_tag :search, params[:search], placeholder: "レストランを検索したい地域はどこですか?", class: "form-control"%>
 		</div>
-	</div>
+		<div>
+			<%= submit_tag "Search", class: "btn", id: "search-btn" %>
+		</div>
+	<% end %>
 </div>
