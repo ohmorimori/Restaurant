@@ -1,14 +1,17 @@
 <div id="map"></div>
+
+
 <div class="main shops-index">
+<%= "検索地点: #{params[:search]}"%>
+
   <div class="container">
-    <% if @result["rest"].present? %>
-      <% @result["rest"].each do |shop| %>
+    <% if @shops.present? %>
+      <% @shops.each do |shop| %>
         <div class="shops-index-item">
   	      <div class="shop-name">
   	        <%= link_to(shop["name"], shop["url"], target: "_blank") %>
-            <%= shop["latitude"] %>
-            <%= shop["longitude"] %>
   	      </div>
+          <%= "\n検索地点からの距離: #{(shop["dist_from_search_point"]*1000).round(0)} m" %>
         </div>
       <% end %>
     <% end %>
