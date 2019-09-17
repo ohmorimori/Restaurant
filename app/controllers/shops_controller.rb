@@ -1,6 +1,8 @@
+require 'net/http'
+
 class ShopsController < ApplicationController
-  def index
-  	
-  	@shops = Shop.all
-  end
+
+	def index
+
+	end
 end
