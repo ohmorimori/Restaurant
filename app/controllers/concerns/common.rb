@@ -83,56 +83,43 @@ module Common
 		return shops
 	end
 
-
-	def add_distance_info(shops, latitude, longitude)
+	def get_distance(lng1, lat1, lng2, lat2)
 =begin
 		get distance of restaurants from search point of (latitude, longitude) 
 		Parameters
 		---------------
-		shops: hash
-			restaurants list
-		latitude: string
-			string of latitude
+		lng1, lng2: double
+			longitude of point 1 or 2
 			example
-			"23.45678"
-		longitude: string
-			string of longitude
+			123.4567
+		lat1, lat2: double
+			latitude of point 1 or 2
 			example
-			"123.4567"
+			23.45678
 
 		Returns
 		---------------
-		shops: hash
-			restaurants list with distance info
+		distance: doble
+			distance of two points
 =end
 
-		#unnecessary to calculate distance if no map info 
-		if shops.blank? || latitude.blank? || longitude.blank?
-			return nil
-		end
+
+		#radius of the earth (km)
+		r = 6378.137
+
+		#convert from degree to radian
+		#longitude and latitude for the standard position (search)
+		x_1 = 2.0 * Math::PI * lng1 / 360.0
+		y_1 = 2.0 * Math::PI * lat1 / 360.0
+
+		#longitude and latitude for the position of interest
+		x_2 = 2.0 * Math::PI * lng2 / 360.0
+		y_2 = 2.0 * Math::PI * lat2 / 360.0
 		
-		#calculate distance of two points based on longitude and latitude
-		shops.each do |shop|
-			#radius of the earth (km)
-			r = 6378.137
-
-			#convert from degree to radian
-			#longitude and latitude for the standard position (search)
-			x_1 = 2.0 * Math::PI * longitude.to_d / 360.0
-			y_1 = 2.0 * Math::PI * latitude.to_d / 360.0
-
-			#longitude and latitude for the position of interest
-			x_2 = 2.0 * Math::PI * shop["longitude"].to_d / 360.0
-			y_2 = 2.0 * Math::PI * shop["latitude"].to_d / 360.0
-			
-			#https://keisan.casio.jp/exec/system/1257670779
-			distance = r * Math.acos(Math.sin(y_1) * Math.sin(y_2) + Math.cos(y_1) * Math.cos(y_2) * Math.cos(x_2 - x_1)) 
-			#convert to km -> m
-			shop["dist_from_search_point"] = (distance * 1000).to_i
-		end
-
-		#sort by distance from serch point
-		shops = shops.sort_by { |shop| shop["dist_from_search_point"].to_d }
-		return shops
+		#https://keisan.casio.jp/exec/system/1257670779
+		distance = r * Math.acos(Math.sin(y_1) * Math.sin(y_2) + Math.cos(y_1) * Math.cos(y_2) * Math.cos(x_2 - x_1)) 
+		#convert to km -> m
+		return (distance * 1000).to_i
+		
 	end
 end
