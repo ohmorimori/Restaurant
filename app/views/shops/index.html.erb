@@ -1,4 +1,4 @@
-<div id="map"></div>
+
 
 <div class="main shops-index">
   <p>検索地点: <%= params[:search] %></p>
@@ -10,7 +10,9 @@
     	      <div class="shop-name">
     	        <%= link_to(shop["name"], shop["url"], target: "_blank") %>
     	      </div>
-
+            <div class="shop-category">
+              <%= shop["category"] %>
+            </div>
             <div class="shop-dist">
               検索地点からの距離:
               <%=  shop["dist_from_search_point"].present? ? shop["dist_from_search_point"] : "-" %> m
