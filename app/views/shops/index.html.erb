@@ -1,21 +1,37 @@
-
-
 <div class="main shops-index">
   <p>検索地点: <%= params[:search] %></p>
   <p>ヒット件数: <%= @shops.present? ? @shops.length : 0 %></p>
   <% if @shops.present? %>
     <div class="container">
         <% @shops.each do |shop| %>
-          <div class="shops-index-item">
-    	      <div class="shop-name">
-    	        <%= link_to(shop["name"], shop["url"], target: "_blank") %>
-    	      </div>
-            <div class="shop-category">
-              <%= shop["category"] %>
+          <div class="shop-index-items link-panel clearfix ">
+            <div class="shop-left">
+              <div class="shop-image">
+                <img src=<%= shop["image_url"]["shop_image1"].blank? ? "/no-image-icon-5.jpg" : shop["image_url"]["shop_image2"] %> >
+              </div>
             </div>
-            <div class="shop-dist">
-              検索地点からの距離:
-              <%=  shop["dist_from_search_point"].present? ? shop["dist_from_search_point"] : "-" %> m
+
+            <div class="shop-right">
+      	      <div class="shop-name">
+                <%= link_to("", shop["url"], target: "_blank") %>
+                <%= shop["name"] %>
+              </div>
+              <div class="shop-category">
+                <%= shop["category"] %>
+              </div>
+              <div class="shop-dist">
+                検索地点からの距離:
+                <%=  shop["dist_from_search_point"].present? ? shop["dist_from_search_point"] : "-" %> m
+              </div>
+              
+              <div class="shop-score"> 
+                平均評価:
+                <%=  shop["score"].round(2)%>
+              </div>
+              <div class="shop-rating">
+                Rating for Sort:
+                <%=  shop["rating"].round(2)%>
+              </div>
             </div>
           </div>
         <% end %>
