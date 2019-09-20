@@ -18,8 +18,8 @@ module Common
 		
 		Returns
 		---------------
-		result: string
-			response in JSON format
+		result: hash
+			response
 =end
 		
 		parsed_url = URI.parse(url + "?" + prms)
@@ -65,7 +65,7 @@ module Common
 				    latitude: latitude,
 				    longitude: longitude,
 				    range: 4,
-				    hit_per_page: 10
+				    hit_per_page: 5
 				}
 			)
 		elsif (params[:search].present?)
@@ -73,7 +73,7 @@ module Common
 				{
 				    keyid: key_id,
 				    address: search_word,
-				    hit_per_page: 20
+				    hit_per_page: 5
 				}
 			)
 		end
