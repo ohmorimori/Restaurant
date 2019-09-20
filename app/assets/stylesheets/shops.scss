@@ -15,17 +15,40 @@
   clear: both;
 }
 
-.shops-index-item {
+.shop-index-items {
 	padding: 20px 30px;
+	margin: 5px 0;
 	box-shadow: 0 2px 6px #d7c1d6;
 	background-color: white;
-}
 
-.shop-name {
-	a {
-		font-weight: bold;
-		&:hover {
-			color: #cd3e7c;
+	.shop-left{
+		float: left;
+		width: 20%;
+		padding-right: 5px;
+		img {
+			width: 100px;
+			height: 100px;
+			object-fit: cover;
 		}
 	}
+
+	.shop-right{
+		float: right;
+		width: 70%;
+		text-align: left;
+		.shop-name {
+			a {
+				font-weight: bold;
+				&:hover {
+					color: #cd3e7c;
+				}
+			}
+		}
+	}
+}
+
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
 }
