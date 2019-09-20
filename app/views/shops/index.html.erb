@@ -4,7 +4,7 @@
   <% if @shops.present? %>
     <div class="container">
         <% @shops.each do |shop| %>
-          <div class="shop-index-items clearfix">
+          <div class="shop-index-items link-panel clearfix ">
             <div class="shop-left">
               <div class="shop-image">
                 <img src=<%= shop["image_url"]["shop_image1"].blank? ? "/no-image-icon-5.jpg" : shop["image_url"]["shop_image2"] %> >
@@ -13,7 +13,8 @@
 
             <div class="shop-right">
       	      <div class="shop-name">
-                <%= link_to(shop["name"], shop["url"], target: "_blank") %>
+                <%= link_to("", shop["url"], target: "_blank") %>
+                <%= shop["name"] %>
               </div>
               <div class="shop-category">
                 <%= shop["category"] %>
@@ -28,7 +29,7 @@
                 <%=  shop["score"].round(2)%>
               </div>
               <div class="shop-rating">
-                Rating:
+                Rating for Sort:
                 <%=  shop["rating"].round(2)%>
               </div>
             </div>

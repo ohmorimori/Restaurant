@@ -40,8 +40,6 @@ class ShopsController < ApplicationController
 		end
 
 		#sort by distance from search point
-		#@shops = @shops.sort_by { |shop| shop["dist_from_search_point"].to_d }
-		#@shops = @shops.sort_by { |shop| shop["score"].to_d }
 		@shops = @shops.sort_by { |shop| -shop["rating"].to_d }
 	end
 end
