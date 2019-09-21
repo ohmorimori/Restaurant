@@ -20,7 +20,7 @@ class ShopsController < ApplicationController
 			#calculate score
 			shop["score"] = get_score(shop_id=shop["id"])
 			##calculate rating from distance and score
-			shop["rating"] = get_rating(distance, score)
+			shop["rating"] = get_rating(distance, shop["score"])
 		end
 
 		#sort by rating from search point
