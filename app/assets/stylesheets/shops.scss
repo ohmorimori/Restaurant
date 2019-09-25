@@ -8,11 +8,11 @@
 }
 
 .container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  clear: both;
+	max-width: 600px;
+	margin: 40px auto;
+	padding-left: 15px;
+	padding-right: 15px;
+	clear: both;
 }
 
 .shop-index-items {
@@ -43,6 +43,7 @@
 }
 
 //extend <a> tag link to its parent
+//https://webcode-lab.com/topics/blogid/9/
 .link-panel {
     position: relative;
     z-index: 1;
@@ -58,6 +59,19 @@
 	    text-indent:-999px;
 	    z-index: 2;
 	}
+}
+
+.link-panel a.inlink {
+	position: relative;
+	font-weight: normal;
+	z-index: 10;
+}
+
+.bookmark-btn {
+	color: #8899a6;
+}
+.bookmarked-btn {
+	color: #ffba25;
 }
 
 .clearfix:after {

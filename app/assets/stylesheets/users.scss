@@ -1,0 +1,59 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "common";
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  clear: both;
+}
+
+label {
+	display: block;
+}
+
+.form {
+	max-width: 600px;
+	margin: 0 auto;
+	background-color: white;
+	box-shadow: 0 2px 6px #d7c1d6;
+
+	input {
+		width: 80%;
+		border: 1px solid #dfd8dd;
+		padding: 10px 0;
+		color: #5f575d;
+		font-size: 16px;
+		margin-bottom: 15px;
+
+		&[type="submit"] {
+		  	background-color: #ffbddb;
+		  	border: none;
+		  	cursor: pointer;
+		  	font-weight: bold;
+		  	margin: 8px auto;
+		  	width: 80%;
+		  	@include url(white, #332d2f);
+		}
+	}
+
+	textarea {
+		width: 80%;
+		min-height: 100px;
+		font-size: 16px;
+	}
+
+}
+
+.form-heading {
+	margin: 60px 0 20px;
+}
+
+
+.form-error {
+	color: #ff4d75;
+}

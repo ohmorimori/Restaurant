@@ -1,0 +1,7 @@
+@mixin url($color: white, $hovering-color: #332d2f) {
+	color: $color;
+	&:hover {
+		color: $hovering-color;
+	}		
+}
+$header-height: 64px;

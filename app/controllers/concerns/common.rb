@@ -2,7 +2,34 @@ require 'net/http'
 
 module Common
 	extend ActiveSupport::Concern
+	#application_controller
+	def set_current_user
+		@current_user = User.find_by(id: session[:user_id])
+	end
+
+	def authenticate_user
+		if @current_user == nil
+			flash[:notice] = "Please login to access"
+			redirect_to login_path
+		end
+	end
+
+	def restrict_current_user
+		if @current_user
+			flash[:notice] = "You already logged in"
+			redirect_to root_path
+		end
+	end	
 	
+	#users_controller
+	def ensure_correct_user
+		if @current_user.id != params[:id].to_i
+			flash[:notice] = "You have no right to access"
+			redirect_to root_path
+		end 
+	end
+
+	#shops_controller
 	def get_response_from_api(url, prms)
 =begin
 		Parameters
@@ -65,7 +92,7 @@ module Common
 				    latitude: latitude,
 				    longitude: longitude,
 				    range: 4,
-				    hit_per_page: 5
+				    hit_per_page: 2
 				}
 			)
 		elsif (params[:search].present?)
@@ -73,44 +100,99 @@ module Common
 				{
 				    keyid: key_id,
 				    address: search_word,
-				    hit_per_page: 5
+				    hit_per_page: 2
 				}
 			)
 		end
-
 		result = get_response_from_api(url, prms)
 		shops = result["rest"]
 		
 	end
 
-	def get_restaurants_review(shop_id)
+	def get_restaurants_info_from_id(shop_ids)
 
 =begin
 		get restaurants from gnavi api 
 		Parameters
 		---------------
-		rest_id: string
-			string of id of restaurant
+		shpp_ids: sequence of string
+			sequence of shop id
 			example
-			"gdmt407"
+			["g325200", "a801204", "a801201"]
+		Returns
+		---------------
+		shops: hash
+			restaurants list
+=end
+		
+		if shop_ids.empty?
+			return
+		end
+
+		ids = ""
+		shop_ids.each_with_index do |shop_id, idx|
+			ids += shop_id
+			if idx != shop_ids.size-1
+				ids += ","
+			end
+		end
+
+		key_id = "6463bc55622ce5ad6df3afe4bd4d9815"
+		url = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+		prms = ""
+		prms = URI.encode_www_form(
+			{
+			#https://api.gnavi.co.jp/api/manual/restsearch/
+			    keyid: key_id,
+			    id: ""
+			}
+		)
+
+		prms += ids
+		result = get_response_from_api(url, prms)
+		shops = result["rest"]
+	end
+
+	def get_restaurants_review(shop_ids)
+
+=begin
+		get restaurants from gnavi api 
+		Parameters
+		---------------
+		shop_ids: sequence of string
+			sequence of shop id
+			example
+			["g325200", "a801204", "a801201"]
 		Returns
 		---------------
 		reviews: hash
 			reviews list of restaurants
 =end
+		
+		if shop_ids.empty?
+			return
+		end
+
+		ids = ""
+		shop_ids.each_with_index do |shop_id, idx|
+			ids += shop_id
+			if idx != shop_ids.size-1
+				ids += ","
+			end
+		end
 
 		key_id = "6463bc55622ce5ad6df3afe4bd4d9815"
 		url = "https://api.gnavi.co.jp/PhotoSearchAPI/v3/"
 		prms = ""
-		if (shop_id.present?)
-			prms = URI.encode_www_form(
-				{
-				#https://api.gnavi.co.jp/api/manual/restsearch/
-				    keyid: key_id,
-				    shop_id: shop_id,
-				}
-			)
-		end
+		
+		prms = URI.encode_www_form(
+			{
+			#https://api.gnavi.co.jp/api/manual/restsearch/
+			    keyid: key_id,
+			    shop_id: "",
+			}
+		)
+		prms += ids
 
 		result = get_response_from_api(url, prms)
 		result = result["response"]
@@ -136,15 +218,25 @@ module Common
 		return reviews
 	end
 
-	def get_score(shop_id)
+	def get_scores(shop_ids)
 		#calculate average rating of reviews 
-		reviews = get_restaurants_review(shop_id)
-		sum = 0.0
-		reviews.each do |review|
-			sum += review["total_score"].to_d
+		reviews = get_restaurants_review(shop_ids)
+		scores = {}
+
+		shop_ids.each_with_index do |shop_id, idx|
+			sum = 0.0
+			cnt = 0
+			reviews.each do |review|
+				if review["shop_id"] == shop_id
+					sum += review["total_score"].to_d
+					cnt += 1
+				end
+			end
+			sum /= cnt
+			average = (cnt > 0) ? sum : 0.0
+			scores["#{shop_id}"] = average
 		end
-		sum /= reviews.size
-		score = reviews.present? ? sum : 0.0
+		return scores
 	end
 
 	def get_distance(lng1, lat1, lng2, lat2)
