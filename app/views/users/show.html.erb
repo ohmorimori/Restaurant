@@ -3,13 +3,14 @@
     <div class="form-heading">Accont Information</div>
     <div class="form users-form">
       <div class="form-body">
-      	<p>Name</p>
-      	<%= @user.name %>
-
-      	<p>Email</p>
-      	<%= @user.email %>
+      	<p>Name:
+         	<%= @user.name %>
+        </p>
+      	<p>Email:
+          <%= @user.email %>
+        </p>
         <% if @current_user.id == @user.id %>
-          <%= link_to("Edit", edit_user_path(@user))%>
+          <%= link_to("Edit", edit_user_path(@user), class: "btn-submit")%>
         <% end %>
       </div>
     </div>

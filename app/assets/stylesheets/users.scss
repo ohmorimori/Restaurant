@@ -49,6 +49,18 @@ label {
 
 }
 
+
+.btn-submit {
+	width: 80%;
+	background-color: #ffbddb;
+	border: none;
+	margin: 8px auto;
+	padding: 10px 0;
+	margin-bottom: 15px;
+	@include url(white, #332d2f);
+	display: inline-block;
+}
+
 .form-heading {
 	margin: 60px 0 20px;
 }

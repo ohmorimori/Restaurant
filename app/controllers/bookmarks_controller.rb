@@ -26,7 +26,15 @@ class BookmarksController < ApplicationController
 		)
 		@bookmark.save
 
-		redirect_to root_path
+		
+		respond_to do |format|
+			format.html {
+				render 'shops/index'
+			}
+			format.js {
+				@shop_id = params[:shop_id]
+			}
+		end
 	end
 
 	def destroy
@@ -34,10 +42,16 @@ class BookmarksController < ApplicationController
 			user_id: @current_user.id,
 			shop_id: params[:shop_id]
 		)
-
 		@bookmark.destroy
 		
-		redirect_to root_path
+		respond_to do |format|
+			format.html {
+				render 'shops/index'
+			}
+			format.js {
+				@shop_id = params[:shop_id]
+			}
+		end	
 	end
 
 end

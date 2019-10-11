@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   post 'logout' => 'users#logout'
 
   post 'bookmarks/:shop_id/create' => 'bookmarks#create'
-  post 'bookmarks/:shop_id/destroy' => 'bookmarks#destroy'
+  delete 'bookmarks/:shop_id/destroy' => 'bookmarks#destroy'
   get 'bookmarks/index' => 'bookmarks#index'
 
   resources :users, only: [:show, :edit, :update, :destroy]

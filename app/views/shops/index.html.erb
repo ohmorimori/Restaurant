@@ -9,13 +9,11 @@
             <div class="shop-image">
               <img src=<%= shop["image_url"]["shop_image1"].blank? ? "/no-image-icon-5.jpg" : shop["image_url"]["shop_image2"] %> >
             </div>
-            <div class="shop-bookmark">
-              <% if Bookmark.find_by(user_id: @current_user.id, shop_id: shop["id"]) %>
-                <%= link_to("お気に入り★", "/bookmarks/#{shop["id"]}/destroy", method: :post, class: "inlink bookmarked-btn") %>
-              <% elsif @current_user %>
-                <%= link_to("お気に入り★", "/bookmarks/#{shop["id"]}/create", method: :post, class: "inlink bookmark-btn")  %>
-              <% end %>
-            </div>
+            <% if @current_user %>
+              <div id=<%="shop-bookmark-#{shop['id']}"%>>
+                <%= render 'bookmarks/follow', shop_id: shop['id'] %>
+              </div>
+            <% end %>
           </div>
 
           <div class="shop-right">
