@@ -1,0 +1,5 @@
+<% if Bookmark.find_by(user_id: @current_user.id, shop_id: shop_id) %>
+  <%= link_to("お気に入り済★", "/bookmarks/#{shop_id}/destroy", method: :delete, class: "inlink bookmarked-btn", remote: true) %>
+<% elsif @current_user %>
+  <%= link_to("お気に入り★", "/bookmarks/#{shop_id}/create", method: :post, class: "inlink bookmark-btn", remote: true)  %>             
+<% end %>

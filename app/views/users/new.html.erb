@@ -1,0 +1,25 @@
+<div class="main users-new">
+  <div class="container">
+    <div class="form-heading">Signup Form</div>
+    <div class="form users-form">
+      <div class="form-body">
+        <%= render 'shared/error_messages' %>
+      	<%= form_for(@user, url: signup_path) do |f| %>
+      		<%= f.label :name, "Name" %>
+      		<%= f.text_field :name %>
+      		<%= f.label :email, "Email" %>
+      		<%= f.email_field :email %>
+
+          <%= f.label :passoword, "Password" %>
+          <%= f.password_field :password %>
+
+          <%= f.label :password_confirmation, "Password Confirmation" %>
+          <%= f.password_field :password_confirmation %>
+
+
+	        <%= f.submit :Signup%>
+	    <% end %>
+      </div>
+    </div>
+  </div>
+</div>
